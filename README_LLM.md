@@ -86,42 +86,6 @@ Evaluated on a held-out test set of 296 messages (balanced: 149 ham, 147 spam).
 
 Loss fluctuated across steps rather than decreasing smoothly, which is common with a small batch size (8) and a partially-frozen model — but final test-set metrics above confirm the model converged to a genuinely useful decision boundary despite the noisy intermediate loss curve.
 
-## Repository Structure
-
-```
-├── model/
-│   ├── attention.py        # Multi-head self-attention implementation
-│   ├── transformer_block.py
-│   ├── gpt2.py              # Full model assembly
-│   └── weight_loader.py     # Loads OpenAI GPT-2 checkpoint into custom architecture
-├── finetune/
-│   ├── classifier_head.py
-│   └── train_classifier.py
-├── data/
-│   └── [dataset loading / preprocessing scripts]
-├── notebooks/
-│   └── [exploration / evaluation notebooks, if any]
-├── requirements.txt
-└── README.md
-```
-
-## How to Run
-
-```bash
-# Clone the repo
-git clone [your-repo-url]
-cd [repo-name]
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Download pretrained GPT-2 weights
-python download_weights.py
-
-# Fine-tune on spam classification
-python finetune/train_classifier.py --dataset data/spam.csv --epochs 5
-```
-
 ## Key Learnings
 
 - Porting OpenAI's checkpoint into the custom architecture required carefully matching parameter shapes and splitting the fused query/key/value attention weights (stored as a single combined matrix in the original checkpoint) into separate tensors for the from-scratch multi-head attention implementation.
@@ -130,9 +94,6 @@ python finetune/train_classifier.py --dataset data/spam.csv --epochs 5
 
 ## References
 
-- Radford et al., "Language Models are Unsupervised Multitask Learners" (GPT-2 paper)
+- Build LLM from Scratch by Sebastian Raschka
 - OpenAI GPT-2 released weights
-
-## License
-
-[MIT / specify]
+- Attention is all you need(Paper from Google Reserachers)
